@@ -20,3 +20,14 @@ C:\Users\Azure\Desktop\AspNetCoreApp\AspNetCoreApp\AspNetCoreApp\obj\Debug\netco
 C:\Users\Azure\Desktop\AspNetCoreApp\AspNetCoreApp\AspNetCoreApp\obj\Debug\netcoreapp2.0\AspNetCoreApp.AssemblyInfo.cs
 C:\Users\Azure\Desktop\AspNetCoreApp\AspNetCoreApp\AspNetCoreApp\obj\Debug\netcoreapp2.0\AspNetCoreApp.dll
 C:\Users\Azure\Desktop\AspNetCoreApp\AspNetCoreApp\AspNetCoreApp\obj\Debug\netcoreapp2.0\AspNetCoreApp.pdb
+C:\Users\Amaterasu\Documents\GitHub\MsCognitiveServices\AspNetCoreApp\AspNetCoreApp\bin\Debug\netcoreapp2.0\AspNetCoreApp.deps.json
+C:\Users\Amaterasu\Documents\GitHub\MsCognitiveServices\AspNetCoreApp\AspNetCoreApp\bin\Debug\netcoreapp2.0\AspNetCoreApp.runtimeconfig.json
+C:\Users\Amaterasu\Documents\GitHub\MsCognitiveServices\AspNetCoreApp\AspNetCoreApp\bin\Debug\netcoreapp2.0\AspNetCoreApp.runtimeconfig.dev.json
+C:\Users\Amaterasu\Documents\GitHub\MsCognitiveServices\AspNetCoreApp\AspNetCoreApp\bin\Debug\netcoreapp2.0\AspNetCoreApp.dll
+C:\Users\Amaterasu\Documents\GitHub\MsCognitiveServices\AspNetCoreApp\AspNetCoreApp\bin\Debug\netcoreapp2.0\AspNetCoreApp.pdb
+C:\Users\Amaterasu\Documents\GitHub\MsCognitiveServices\AspNetCoreApp\AspNetCoreApp\obj\Debug\netcoreapp2.0\AspNetCoreApp.csprojResolveAssemblyReference.cache
+C:\Users\Amaterasu\Documents\GitHub\MsCognitiveServices\AspNetCoreApp\AspNetCoreApp\obj\Debug\netcoreapp2.0\AspNetCoreApp.csproj.CoreCompileInputs.cache
+C:\Users\Amaterasu\Documents\GitHub\MsCognitiveServices\AspNetCoreApp\AspNetCoreApp\obj\Debug\netcoreapp2.0\AspNetCoreApp.AssemblyInfoInputs.cache
+C:\Users\Amaterasu\Documents\GitHub\MsCognitiveServices\AspNetCoreApp\AspNetCoreApp\obj\Debug\netcoreapp2.0\AspNetCoreApp.AssemblyInfo.cs
+C:\Users\Amaterasu\Documents\GitHub\MsCognitiveServices\AspNetCoreApp\AspNetCoreApp\obj\Debug\netcoreapp2.0\AspNetCoreApp.dll
+C:\Users\Amaterasu\Documents\GitHub\MsCognitiveServices\AspNetCoreApp\AspNetCoreApp\obj\Debug\netcoreapp2.0\AspNetCoreApp.pdb

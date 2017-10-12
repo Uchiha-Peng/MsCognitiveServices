@@ -73,10 +73,7 @@ namespace CognitiveServices.Controllers
         {
             try
             {
-
-
                 HttpClient client = new HttpClient();
-
                 // 请求头
                 client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", subscriptionKey);
 
@@ -112,43 +109,6 @@ namespace CognitiveServices.Controllers
             }
         }
 
-
-        ///// <summary>
-        /////根据图片路径读取图片文件并转换成字节数组
-        ///// </summary>
-        ///// <param name="imageFilePath">图片路径</param>
-        ///// <returns>返回字节数组</returns>
-        //static byte[] GetImageAsByteArray(string imageFilePath)
-        //{
-        //    FileStream fileStream = new FileStream(imageFilePath, FileMode.Open, FileAccess.Read);
-        //    BinaryReader binaryReader = new BinaryReader(fileStream);
-        //    return binaryReader.ReadBytes((int)fileStream.Length);
-        //}
-
-        ////创建一个人员组
-        //static async void MakeCreateGroupRequest(string personGroupId)
-        //{
-        //    var client = new HttpClient();
-
-        //    // 请求头 Ocp-Apim-Subscription-Key值为subscriptionKey
-        //    client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", subscriptionKey);
-        //    //请求URL
-        //    string uri = "https://eastus.api.cognitive.microsoft.com/face/v1.0/persongroups/" + personGroupId;
-
-        //    // 这里的"name"用于显示，不必是唯一的,另外，"userData"也是可选的。
-        //    string json = "{\"name\":\"My Group\", \"userData\":\"Some data related to my group.\"}";
-        //    HttpContent content = new StringContent(json);
-        //    //Content-Type为application/json
-        //    content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-        //    //返回信息
-        //    HttpResponseMessage response = await client.PutAsync(uri, content);
-
-        //    // 如果创建成功，你会看到OK.
-        //    // 如果已经存在，你会看到Conflict
-        //    Console.WriteLine("Response status: " + response.StatusCode);
-
-        //}        
-
         /// <summary>
         /// 上传文件到wwwroot指定文件夹
         /// </summary>
@@ -180,10 +140,10 @@ namespace CognitiveServices.Controllers
                         {
                             string src = Path.Combine(webRoot, formFile.FileName);
                             var fileName = formFile.FileName;
-                            using (var stream = new FileStream(src, FileMode.Create,FileAccess.ReadWrite))
+                            using (var stream = new FileStream(src, FileMode.Create, FileAccess.ReadWrite))
                             {
-                                await formFile.CopyToAsync(stream);                                
-                            }                            
+                                await formFile.CopyToAsync(stream);
+                            }
                             //using (FileStream fs = File.Create(src, Convert.ToInt32(formFile.Length)))
                             //{
                             //    formFile.CopyTo(fs);
@@ -192,7 +152,6 @@ namespace CognitiveServices.Controllers
                         }
                     }
                     return Ok(new { count = files.Count, size, folder });
-
                 }
                 else
                 {
@@ -205,5 +164,76 @@ namespace CognitiveServices.Controllers
             }
         }
 
+        [HttpGet]
+        public async Task<IActionResult> DownloadFile(string filename)
+        {
+            //wwwroot目录
+            string webRoot = _hostingEnvironment.WebRootPath;
+            if (filename == null)
+            {
+                return BadRequest("文件名不能为空");
+            }
+            else
+            {
+                DirectoryInfo directory = new DirectoryInfo(webRoot);
+                FileInfo[] file = directory.GetFiles(filename);
+                if (file.Length > 0)
+                {
+                    //foreach (var item in file)
+                    //{
+                    //    var paths = item.FullName;
+                    //}
+                    var memory = new MemoryStream();
+                    string filePath = file[0].FullName;
+                    using (var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+                    {
+                        await stream.CopyToAsync(memory);
+                    }
+                    memory.Position = 0;
+                    //return File(memory, GetContentType(path), Path.GetFileName(path));
+                    return File(memory, "multipart/form-data",file[0].Name);
+                }
+                return BadRequest();
+                //var path = Path.Combine(webRoot, filename);
+                //var memory = new MemoryStream();
+                //using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read))
+                //{
+                //    await stream.CopyToAsync(memory);
+                //}
+                //memory.Position = 0;
+
+                //return File(memory, "multipart/form-data",file[0].Name);
+            }
+
+        }
+
+        [HttpDelete]
+        public ActionResult DeleteFile(string FileName)
+        {
+            //wwwroot目录
+            string webRoot = _hostingEnvironment.WebRootPath;
+            if (FileName == null)
+            {
+                return BadRequest("文件名不能为空");
+            }
+            else
+            {
+                DirectoryInfo directory = new DirectoryInfo(webRoot);
+                FileInfo[] file = directory.GetFiles(FileName);
+                if (file.Length > 0)
+                {
+                    try
+                    {
+                        file[0].Delete();
+                        return Ok("删除成功");
+                    }
+                    catch (Exception ex)
+                    {
+                        return BadRequest("删除失败:" + ex.Message);
+                    }
+                }
+                return BadRequest();
+            }
+        }
     }
 }
