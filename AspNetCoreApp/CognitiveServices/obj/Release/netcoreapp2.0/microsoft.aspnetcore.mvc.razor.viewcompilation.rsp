@@ -1,0 +1,5 @@
+C:\Users\Azure\Desktop\AspNetCoreApp\AspNetCoreApp\CognitiveServices
+--output-path=obj\Release\netcoreapp2.0\
+--application-name=CognitiveServices
+--content-root=C:\Users\Azure\Desktop\AspNetCoreApp\AspNetCoreApp\CognitiveServices
+--file=

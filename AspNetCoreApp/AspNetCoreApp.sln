@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCoreApp", "AspNetCoreApp\AspNetCoreApp.csproj", "{67609A77-8142-47AE-83EF-03895E72320F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CognitiveServices", "CognitiveServices\CognitiveServices.csproj", "{BBB1B296-1EAE-4918-BA91-688101F25BBC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{67609A77-8142-47AE-83EF-03895E72320F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67609A77-8142-47AE-83EF-03895E72320F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67609A77-8142-47AE-83EF-03895E72320F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67609A77-8142-47AE-83EF-03895E72320F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBB1B296-1EAE-4918-BA91-688101F25BBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBB1B296-1EAE-4918-BA91-688101F25BBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBB1B296-1EAE-4918-BA91-688101F25BBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBB1B296-1EAE-4918-BA91-688101F25BBC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DD11CB7C-C28B-443C-8A31-1B8AAB438B88}
+	EndGlobalSection
+EndGlobal
