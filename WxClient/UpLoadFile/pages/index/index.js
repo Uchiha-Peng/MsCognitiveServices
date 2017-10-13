@@ -45,11 +45,10 @@ Page({
     console.info(path);
     if (path.includes(".jpg") || path.includes(".png") || path.includes(".jpeg")) {
       wx.uploadFile({
-        url: 'http://www.uchiha-peng.cc:85/api/Services/GetImageByteArry',
+        url: 'http://localhost:8432/api/Services/GetImageByteArry',
         filePath: path,
         name: 'file',
         formData: {
-          'FileName': that.data.FileName
         },
         success: function (res) {
           console.info(res);
@@ -66,5 +65,29 @@ Page({
   InputName: function (e) {
     this.setData({ FileName: e.detail.value })
     console.info(this.data.FileName);
+  },
+  DownLoadFile:function(){
+    var fileName=this.data.FileName;
+    var url ='http://40.71.87.251:85/api/Services/DownLoadFile?FileName='+fileName;
+    console.info(url);
+    const downloadTask =  wx.downloadFile({
+      url: url, //仅为示例，并非真实的资源      
+      success: function (res) {
+        console.info(res);
+        wx.saveFile({
+          tempFilePath: res.tempFilePath,
+          success:function(e){
+            console.info(e);
+            console.info('文件保存成功');
+          }
+        })
+      }
+    })
+    downloadTask.onProgressUpdate((res) => {
+      console.log('下载进度', res.progress)
+      console.log('已经下载的数据长度', res.totalBytesWritten)
+      console.log('预期需要下载的数据总长度', res.totalBytesExpectedToWrite)
+    })
   }
+  
 })

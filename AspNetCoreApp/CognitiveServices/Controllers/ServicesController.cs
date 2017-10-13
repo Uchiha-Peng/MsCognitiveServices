@@ -31,25 +31,25 @@ namespace CognitiveServices.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> GetImageByteArry(IFormFile files)
+        public async Task<ActionResult> GetImageByteArry(List<IFormFile> files)
         {
             try
             {
                 if (Request.HasFormContentType)
                 {
-                    if (files.Length > 0)
+                    if (files.Count > 0)
                     {
                         byte[] FileContent;
                         using (var memoryStream = new MemoryStream())
                         {
-                            await files.CopyToAsync(memoryStream);
+                            await files[0].CopyToAsync(memoryStream);
                             memoryStream.Seek(0, SeekOrigin.Begin);
                             FileContent = new byte[memoryStream.Length];
                             await memoryStream.ReadAsync(FileContent, 0, FileContent.Length);
                         }
                         return Ok(MakeAnalysisRequest(FileContent));
                     }
-                    return BadRequest("文件大小为0");
+                    return BadRequest("请至少选择一个文件");
                 }
                 else
                 {
@@ -60,10 +60,8 @@ namespace CognitiveServices.Controllers
             {
                 return BadRequest("出现错误" + e.Message);
             }
-
-
         }
-
+        
 
         /// <summary>
         /// 上传文件到wwwroot指定文件夹

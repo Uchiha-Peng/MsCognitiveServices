@@ -8,7 +8,7 @@
     @Model.Message
 </p>
 <form method="post" enctype="multipart/form-data" action="http://localhost:8432/api/Services/GetImageByteArry">
-    <input type="file" accept="image/png,image/jpg,image/jpeg" />
+    <input type="file" name="files" />
     <button type="submit">上传头像</button>
 </form>
 
@@ -18,7 +18,6 @@
         <div class="col-md-10">
             <p>上传文件</p>
             <input type="file" name="files" />
-            <input type="text" name="FileName"/>
         </div>
     </div>
     <div class="form-group">
