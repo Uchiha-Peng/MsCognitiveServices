@@ -7,13 +7,13 @@
 <p>
     @Model.Message
 </p>
-<form method="post" enctype="multipart/form-data" action="http://40.71.87.251:85/api/Services/GetImageByteArry">
+<form method="post" enctype="multipart/form-data" action="http://localhost:8432/api/Services/GetImageByteArry">
     <input type="file" accept="image/png,image/jpg,image/jpeg" />
     <button type="submit">上传头像</button>
 </form>
 
 
-<form method="post" enctype="multipart/form-data" action="http://40.71.87.251:85/api/Services/FileUpLoad">
+<form method="post" enctype="multipart/form-data" action="http://localhost:8432/api/Services/FileUpLoad">
     <div class="form-group">
         <div class="col-md-10">
             <p>上传文件</p>
@@ -28,7 +28,7 @@
     </div>
 </form>
 
-<form method="put" enctype="multipart/form-data" action="http://40.71.87.251:85/api/Services/DownLoadFile">
+<form method="put" enctype="multipart/form-data" action="http://localhost:8432/api/Services/DownLoadFile">
     <div class="form-group">
         <div class="col-md-10">
             <input type="text" name="FileName" placeholder="请输入要下载的文件名" />
@@ -38,12 +38,12 @@
 </form>
 
 
-<form method="delete" enctype="multipart/form-data" action="http://40.71.87.251:85/api/Services/DeleteFile">
+<form method="delete" enctype="multipart/form-data" action="http://localhost:8432/api/Services/DeleteFile">
     <div class="form-group">
         <div class="col-md-10">
             <input type="text" name="FileName" placeholder="请输入要删除的文件名" />
             <input type="submit" value="删除" />
         </div>
-        <img src="http://40.71.87.251:85/api/Services/DownLoadFile?FileName=Oracle.PNG" />
+        <img src="http://localhost:8432/api/Services/DownLoadFile?FileName=Oracle.PNG" />
     </div>
 </form>

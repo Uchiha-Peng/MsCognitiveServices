@@ -1,7 +1,16 @@
 <view class='container'>
-<form bindsubmit='formSubmit'>
-<input type='text' bindtap='ChoseFile' value='{{FilePath}}' ></input>
-<input  type='text' bindinput='InputName'  name='FileName'  value='{{FileName}}' placeholder='请输入文件名'></input>
-<button form-type='submit'>提交</button>
-</form>
+  <form bindsubmit='formSubmit'>
+    <input type='text' bindtap='ChoseImage' value='{{FilePath}}'></input>    
+    <button form-type='submit'>上传照片</button>
+  </form>
+
+  <form bindsubmit='UpLoadFile'>
+    <input type='text' bindtap='ChoseFile' value='{{FilePath}}'></input>
+     <button form-type='submit'>上传文件</button>
+  </form>
+
+   <form bindsubmit='DownLoadFile'>
+   <input type='text' bindinput='InputName' name='FileName' value='{{FileName}}' placeholder='请输入要下载的文件名'></input>
+     <button form-type='submit'>下载文件</button>
+  </form>
 </view>

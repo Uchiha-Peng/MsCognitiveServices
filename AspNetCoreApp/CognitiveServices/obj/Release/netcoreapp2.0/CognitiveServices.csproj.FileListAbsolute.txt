@@ -9,3 +9,14 @@ C:\Users\Azure\Documents\GitHub\MsCognitiveServices\AspNetCoreApp\CognitiveServi
 C:\Users\Azure\Documents\GitHub\MsCognitiveServices\AspNetCoreApp\CognitiveServices\obj\Release\netcoreapp2.0\CognitiveServices.AssemblyInfo.cs
 C:\Users\Azure\Documents\GitHub\MsCognitiveServices\AspNetCoreApp\CognitiveServices\obj\Release\netcoreapp2.0\CognitiveServices.dll
 C:\Users\Azure\Documents\GitHub\MsCognitiveServices\AspNetCoreApp\CognitiveServices\obj\Release\netcoreapp2.0\CognitiveServices.pdb
+C:\Users\Amaterasu\Documents\GitHub\MsCognitiveServices\AspNetCoreApp\CognitiveServices\bin\Release\netcoreapp2.0\CognitiveServices.deps.json
+C:\Users\Amaterasu\Documents\GitHub\MsCognitiveServices\AspNetCoreApp\CognitiveServices\bin\Release\netcoreapp2.0\CognitiveServices.runtimeconfig.json
+C:\Users\Amaterasu\Documents\GitHub\MsCognitiveServices\AspNetCoreApp\CognitiveServices\bin\Release\netcoreapp2.0\CognitiveServices.runtimeconfig.dev.json
+C:\Users\Amaterasu\Documents\GitHub\MsCognitiveServices\AspNetCoreApp\CognitiveServices\bin\Release\netcoreapp2.0\CognitiveServices.dll
+C:\Users\Amaterasu\Documents\GitHub\MsCognitiveServices\AspNetCoreApp\CognitiveServices\bin\Release\netcoreapp2.0\CognitiveServices.pdb
+C:\Users\Amaterasu\Documents\GitHub\MsCognitiveServices\AspNetCoreApp\CognitiveServices\obj\Release\netcoreapp2.0\CognitiveServices.csprojResolveAssemblyReference.cache
+C:\Users\Amaterasu\Documents\GitHub\MsCognitiveServices\AspNetCoreApp\CognitiveServices\obj\Release\netcoreapp2.0\CognitiveServices.csproj.CoreCompileInputs.cache
+C:\Users\Amaterasu\Documents\GitHub\MsCognitiveServices\AspNetCoreApp\CognitiveServices\obj\Release\netcoreapp2.0\CognitiveServices.AssemblyInfoInputs.cache
+C:\Users\Amaterasu\Documents\GitHub\MsCognitiveServices\AspNetCoreApp\CognitiveServices\obj\Release\netcoreapp2.0\CognitiveServices.AssemblyInfo.cs
+C:\Users\Amaterasu\Documents\GitHub\MsCognitiveServices\AspNetCoreApp\CognitiveServices\obj\Release\netcoreapp2.0\CognitiveServices.dll
+C:\Users\Amaterasu\Documents\GitHub\MsCognitiveServices\AspNetCoreApp\CognitiveServices\obj\Release\netcoreapp2.0\CognitiveServices.pdb

@@ -21,7 +21,7 @@ Page({
   onReady: function () {
 
   },
-  ChoseFile: function () {
+  ChoseImage: function () {
     var that = this;
     wx.chooseImage({
       count: 1, // 默认9
@@ -45,7 +45,7 @@ Page({
     console.info(path);
     if (path.includes(".jpg") || path.includes(".png") || path.includes(".jpeg")) {
       wx.uploadFile({
-        url: 'http://localhost:8432/api/Services/GetImageByteArry',
+        url: 'http://www.uchiha-peng.cc:85/api/Services/GetImageByteArry',
         filePath: path,
         name: 'file',
         formData: {

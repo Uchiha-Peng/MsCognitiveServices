@@ -31,82 +31,39 @@ namespace CognitiveServices.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> GetImageByteArry(List<IFormFile> files)
-        {
-            if (Request.ContentType.Contains("form-data"))
-            {
-                //var files = Request.Form.Files;
-                if (files.Count > 0)
-                {
-                    string fileName = files[0].FileName;
-                    byte[] FileContent;
-                    using (var memoryStream = new MemoryStream())
-                    {
-                        await files[0].CopyToAsync(memoryStream);
-                        memoryStream.Seek(0, SeekOrigin.Begin);
-                        FileContent = new byte[memoryStream.Length];
-                        await memoryStream.ReadAsync(FileContent, 0, FileContent.Length);
-                    }
-                    var a = Request.Form["FileName"];
-                    return Ok(MakeAnalysisRequest(FileContent));
-                }
-                return BadRequest();
-
-            }
-            else
-            {
-
-                //FilePart part = null;
-                //// access the content here 
-                //await content.ReadAsMultipartAsync(provider);
-                return BadRequest();
-            }
-
-        }
-
-        /// <summary>
-        /// 使用Computer Vision REST API获取指定图像文件的分析
-        /// </summary>
-        /// <param name="imageFilePath">The image file.</param>
-        static async Task<string> MakeAnalysisRequest(byte[] array)
+        public async Task<ActionResult> GetImageByteArry(IFormFile files)
         {
             try
             {
-                HttpClient client = new HttpClient();
-                // 请求头
-                client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", subscriptionKey);
-
-                // 选择要返回的详细参数
-                string requestParameters = "returnFaceId=true&returnFaceLandmarks=false&returnFaceAttributes=age,gender,headPose,smile,facialHair,glasses,emotion,hair,makeup,occlusion,accessories,blur,exposure,noise";
-
-                // Assemble the URI for the REST API Call.
-                string uri = uriBase + "?" + requestParameters;
-
-                HttpResponseMessage response;
-
-                // Request body. Posts a locally stored JPEG image.
-                byte[] byteData = array;
-
-                using (ByteArrayContent content = new ByteArrayContent(byteData))
+                if (Request.HasFormContentType)
                 {
-                    // 这个例子中Content-Type是"application/octet-stream".
-                    // 请求的Header类型一般是"application/json" and "multipart/form-data".
-                    content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-
-                    // Execute the REST API call.
-                    response = await client.PostAsync(uri, content);
-
-                    // Get the JSON response.
-                    string contentString = await response.Content.ReadAsStringAsync();
-                    return contentString;
+                    if (files.Length > 0)
+                    {
+                        byte[] FileContent;
+                        using (var memoryStream = new MemoryStream())
+                        {
+                            await files.CopyToAsync(memoryStream);
+                            memoryStream.Seek(0, SeekOrigin.Begin);
+                            FileContent = new byte[memoryStream.Length];
+                            await memoryStream.ReadAsync(FileContent, 0, FileContent.Length);
+                        }
+                        return Ok(MakeAnalysisRequest(FileContent));
+                    }
+                    return BadRequest("文件大小为0");
+                }
+                else
+                {
+                    return BadRequest("ContentType有误");
                 }
             }
             catch (Exception e)
             {
-
-                return e.Message;
+                return BadRequest("出现错误" + e.Message);
             }
+
+
         }
+
 
         /// <summary>
         /// 上传文件到wwwroot指定文件夹
@@ -195,7 +152,7 @@ namespace CognitiveServices.Controllers
                     }
                     memory.Position = 0;
                     //return File(memory, GetContentType(path), Path.GetFileName(path));
-                    return File(memory, "multipart/form-data",file[0].Name);
+                    return File(memory, "multipart/form-data", file[0].Name);
                 }
                 return BadRequest("文件不存在");
                 //var path = Path.Combine(webRoot, filename);
@@ -241,6 +198,50 @@ namespace CognitiveServices.Controllers
                     }
                 }
                 return BadRequest("该文件不存在或已删除");
+            }
+        }
+
+        /// <summary>
+        /// 使用Computer Vision REST API获取指定图像文件的分析
+        /// </summary>
+        /// <param name="imageFilePath">The image file.</param>
+        static async Task<string> MakeAnalysisRequest(byte[] array)
+        {
+            try
+            {
+                HttpClient client = new HttpClient();
+                // 请求头
+                client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", subscriptionKey);
+
+                // 选择要返回的详细参数
+                string requestParameters = "returnFaceId=true&returnFaceLandmarks=false&returnFaceAttributes=age,gender,headPose,smile,facialHair,glasses,emotion,hair,makeup,occlusion,accessories,blur,exposure,noise";
+
+                // Assemble the URI for the REST API Call.
+                string uri = uriBase + "?" + requestParameters;
+
+                HttpResponseMessage response;
+
+                // Request body. Posts a locally stored JPEG image.
+                byte[] byteData = array;
+
+                using (ByteArrayContent content = new ByteArrayContent(byteData))
+                {
+                    // 这个例子中Content-Type是"application/octet-stream".
+                    // 请求的Header类型一般是"application/json" and "multipart/form-data".
+                    content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+
+                    // Execute the REST API call.
+                    response = await client.PostAsync(uri, content);
+
+                    // Get the JSON response.
+                    string contentString = await response.Content.ReadAsStringAsync();
+                    return contentString;
+                }
+            }
+            catch (Exception e)
+            {
+
+                return e.Message;
             }
         }
     }
