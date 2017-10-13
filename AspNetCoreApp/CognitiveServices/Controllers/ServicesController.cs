@@ -31,12 +31,11 @@ namespace CognitiveServices.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> GetImageByteArry(MultipartFormDataContent content)
+        public async Task<ActionResult> GetImageByteArry(List<IFormFile> files)
         {
             if (Request.ContentType.Contains("form-data"))
             {
-                var ins = content.Count();
-                var files = Request.Form.Files;
+                //var files = Request.Form.Files;
                 if (files.Count > 0)
                 {
                     string fileName = files[0].FileName;
@@ -164,6 +163,11 @@ namespace CognitiveServices.Controllers
             }
         }
 
+        /// <summary>
+        /// 下载文件
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> DownloadFile(string filename)
         {
@@ -171,7 +175,7 @@ namespace CognitiveServices.Controllers
             string webRoot = _hostingEnvironment.WebRootPath;
             if (filename == null)
             {
-                return BadRequest("文件名不能为空");
+                return NotFound("文件名不能为空");
             }
             else
             {
@@ -193,7 +197,7 @@ namespace CognitiveServices.Controllers
                     //return File(memory, GetContentType(path), Path.GetFileName(path));
                     return File(memory, "multipart/form-data",file[0].Name);
                 }
-                return BadRequest();
+                return BadRequest("文件不存在");
                 //var path = Path.Combine(webRoot, filename);
                 //var memory = new MemoryStream();
                 //using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read))
@@ -201,12 +205,16 @@ namespace CognitiveServices.Controllers
                 //    await stream.CopyToAsync(memory);
                 //}
                 //memory.Position = 0;
-
                 //return File(memory, "multipart/form-data",file[0].Name);
             }
 
         }
 
+        /// <summary>
+        /// 删除文件
+        /// </summary>
+        /// <param name="FileName"></param>
+        /// <returns></returns>
         [HttpDelete]
         public ActionResult DeleteFile(string FileName)
         {
@@ -214,7 +222,7 @@ namespace CognitiveServices.Controllers
             string webRoot = _hostingEnvironment.WebRootPath;
             if (FileName == null)
             {
-                return BadRequest("文件名不能为空");
+                return NotFound("文件名不能为空");
             }
             else
             {
@@ -232,7 +240,7 @@ namespace CognitiveServices.Controllers
                         return BadRequest("删除失败:" + ex.Message);
                     }
                 }
-                return BadRequest();
+                return BadRequest("该文件不存在或已删除");
             }
         }
     }

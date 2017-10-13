@@ -2,27 +2,48 @@
 @using AspNetCoreApp.Pages;
 @model IndexModel
 
- <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" />
 <h2>Separate page model</h2>
 <p>
     @Model.Message
 </p>
-<form id="form" enctype="multipart/form-data" method="post" action="http://localhost:8432/api/Services/GetImageByteArry">
-    <input type="file" accept="image/png,image/jpg,image/jpeg"  />
-    <button type="submit">上传文件</button>
+<form method="post" enctype="multipart/form-data" action="http://40.71.87.251:85/api/Services/GetImageByteArry">
+    <input type="file" accept="image/png,image/jpg,image/jpeg" />
+    <button type="submit">上传头像</button>
 </form>
 
 
-<form method="post" enctype="multipart/form-data"  action="http://localhost:8432/api/Services/FileUpLoad">
+<form method="post" enctype="multipart/form-data" action="http://40.71.87.251:85/api/Services/FileUpLoad">
     <div class="form-group">
         <div class="col-md-10">
-            <p>Upload one or more files using this form:</p>
+            <p>上传文件</p>
             <input type="file" name="files" />
+            <input type="text" name="FileName"/>
         </div>
     </div>
     <div class="form-group">
         <div class="col-md-10">
-            <input type="submit" value="Upload" />
+            <input type="submit" value="上传" />
         </div>
+    </div>
+</form>
+
+<form method="put" enctype="multipart/form-data" action="http://40.71.87.251:85/api/Services/DownLoadFile">
+    <div class="form-group">
+        <div class="col-md-10">
+            <input type="text" name="FileName" placeholder="请输入要下载的文件名" />
+            <input type="submit" value="下载" />
+        </div>
+    </div>
+</form>
+
+
+<form method="delete" enctype="multipart/form-data" action="http://40.71.87.251:85/api/Services/DeleteFile">
+    <div class="form-group">
+        <div class="col-md-10">
+            <input type="text" name="FileName" placeholder="请输入要删除的文件名" />
+            <input type="submit" value="删除" />
+        </div>
+        <img src="http://40.71.87.251:85/api/Services/DownLoadFile?FileName=Oracle.PNG" />
     </div>
 </form>
