@@ -10,6 +10,10 @@ using Newtonsoft.Json;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.FileProviders;
+using OfficeOpenXml;
+using System.Text;
+using CognitiveServices.Models;
+using System.Data;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -61,7 +65,7 @@ namespace CognitiveServices.Controllers
                 return BadRequest("出现错误" + e.Message);
             }
         }
-        
+
 
         /// <summary>
         /// 上传文件到wwwroot指定文件夹
@@ -242,5 +246,175 @@ namespace CognitiveServices.Controllers
                 return e.Message;
             }
         }
+
+        [HttpGet]
+        public IActionResult Export()
+        {
+            string sWebRootFolder = _hostingEnvironment.WebRootPath;
+            Random rand = new Random();
+            int index = rand.Next(1, 99);
+            string sFileName = $"{"Uchiha" + index}.xlsx";
+            FileInfo file = new FileInfo(Path.Combine(sWebRootFolder, sFileName));
+            using (ExcelPackage package = new ExcelPackage(file))
+            {
+                // 添加表名
+                ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Student");
+                List<Product> list = Product.GetList();
+                List<string> attr = Product.GetAttr(new Product());
+                Product pro = new Product();
+                //添加头
+                for (int i = 0; i < attr.Count; i++)
+                {
+                    worksheet.Cells[1, i + 1].Value = attr[i];
+                }
+                //添加内容
+                for (int i = 0; i < list.Count; i++)
+                {
+                    worksheet.Cells[i + 2, 1].Value = list[i].ID;
+                    worksheet.Cells[i + 2, 2].Value = list[i].Name;
+                    worksheet.Cells[i + 2, 3].Value = list[i].Brand;
+                    worksheet.Cells[i + 2, 4].Value = list[i].Price;
+                }
+                package.Save();
+            }
+            return File(sFileName, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        }
+        
+        [HttpPost]
+        public async Task<ActionResult> Import()
+        {
+            try
+            {
+                List<Product> list = new List<Product>();
+                //获取请求中的第一个文件，并判断是否为空
+                IFormFile files = Request.Form.Files[0];                
+                if (files.Length > 0)
+                {  //创建StringBuilder存储对象
+                    StringBuilder sb = new StringBuilder();
+                    //创建内存流对象
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        //把文件存到内存流中
+                        await files.CopyToAsync(memoryStream);
+                        memoryStream.Seek(0, SeekOrigin.Begin);
+                        //创建Excel包对象
+                        using (ExcelPackage package = new ExcelPackage(memoryStream))
+                        {
+                            //获取第一张表
+                            ExcelWorksheet worksheet = package.Workbook.Worksheets[1];
+                            //获取总行数
+                            int rowCount = worksheet.Dimension.Rows;
+                            //获取总列数
+                            int ColCount = worksheet.Dimension.Columns;
+                            //是否有行标题
+                            bool bHeaderRow = true;
+                            //循环遍历
+                            for (int row = 1; row <= rowCount; row++)
+                            {
+                                for (int col = 1; col <= ColCount; col++)
+                                {
+                                    if (bHeaderRow)
+                                    {
+                                        sb.Append(worksheet.Cells[row, col].Value.ToString() + "\t");
+                                    }
+                                    else
+                                    {
+                                        Product pro = new Product();                                        
+                                        sb.Append(worksheet.Cells[row, col].Value.ToString() + "\t");
+                                    }
+                                }
+                                sb.Append(Environment.NewLine);
+                            }
+                        }
+                    }
+                    
+                    return Ok(sb.ToString());
+                }
+                else
+                {
+                    return NotFound("请至少选择一个文件");
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
+
+        /// <summary>
+        /// ImportToList
+        /// </summary>
+        /// <returns></returns>
+        public async Task<ActionResult> ImportToList()
+        {
+            try
+            {
+                List<Product> list = new List<Product>();
+                //获取请求中的第一个文件，并判断是否为空
+                IFormFile files = Request.Form.Files[0];
+                if (files.Length > 0)
+                {  //创建StringBuilder存储对象
+                    StringBuilder sb = new StringBuilder();
+                    //创建内存流对象
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        //把文件存到内存流中
+                        await files.CopyToAsync(memoryStream);
+                        memoryStream.Seek(0, SeekOrigin.Begin);
+                        //创建Excel包对象
+                        using (ExcelPackage package = new ExcelPackage(memoryStream))
+                        {
+                            //获取第一张表
+                            ExcelWorksheet worksheet = package.Workbook.Worksheets[1];
+                            //获取总行数
+                            int rowCount = worksheet.Dimension.Rows;
+                            //获取总列数
+                            int ColCount = worksheet.Dimension.Columns;
+                            //是否有行标题
+                            bool bHeaderRow = true;
+                            //循环遍历
+                            for (int row = 1; row <= rowCount; row++)
+                            {
+                                //如果有行标题，从第二行开始读
+                                if (bHeaderRow)
+                                {
+                                    if (row > 1)
+                                    {                                       
+                                        Product pro = new Product();
+                                        pro.ID = Convert.ToInt32(worksheet.Cells[row, 1].Value);
+                                        pro.Name = worksheet.Cells[row, 2].Value.ToString();
+                                        pro.Brand = worksheet.Cells[row, 3].Value.ToString();
+                                        pro.Price = Convert.ToDouble(worksheet.Cells[row, 4].Value);
+                                        list.Add(pro);
+                                    }
+                                }
+                                //如果没有列标题，从第一行开始读取
+                                else
+                                {
+                                    Product pro = new Product();
+                                    pro.ID = Convert.ToInt32(worksheet.Cells[row, 1].Value);
+                                    pro.Name = worksheet.Cells[row, 2].Value.ToString();
+                                    pro.Brand = worksheet.Cells[row, 3].Value.ToString();
+                                    pro.Price = Convert.ToDouble(worksheet.Cells[row, 4].Value);
+                                    list.Add(pro);
+                                }
+                            }
+                        }
+                    }
+                    return Ok(list);
+                }
+                else
+                {
+                    return NotFound("请至少选择一个文件");
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("错误："+ex.Message);
+            }
+
+        }
+
     }
 }
